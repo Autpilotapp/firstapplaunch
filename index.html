@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Idea to App Store - The No-Nonsense Launch Guide</title>
+<meta name="description" content="The beginner's guide to building and launching your first app. No coding background needed. Everything I wish someone had told me before I lost time and money figuring it out the hard way.">
+
+<!-- ============================================================= -->
+<!-- META PIXEL — paste your Pixel ID where it says YOUR_PIXEL_ID  -->
+<!-- (You'll need this so Facebook can track who buys. Set it up   -->
+<!-- in Meta Events Manager, then drop the ID in below.)           -->
+<!-- ============================================================= -->
+<!--
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', 'YOUR_PIXEL_ID');
+  fbq('track', 'PageView');
+</script>
+-->
+
+<style>
+  /* ---------- Design tokens ----------
+     Palette: "blueprint at dawn" — the page reads like a build plan that
+     turns into a launch. Deep ink navy ground, blueprint cyan as the
+     working accent, a single warm signal-amber reserved ONLY for the
+     price + buy action so the eye always lands on the sale.
+  */
+  :root{
+    --ink:        #0B1220;   /* near-black navy ground */
+    --ink-2:      #111B2E;   /* raised surface */
+    --ink-3:      #18243B;   /* card surface */
+    --line:       #243352;   /* hairline */
+    --cyan:       #46D8E6;   /* blueprint accent */
+    --cyan-deep:  #1FA8C4;
+    --amber:      #FFB23E;   /* the ONLY action/price color */
+    --amber-deep: #F59412;
+    --paper:      #EFF3FA;   /* primary text */
+    --paper-dim:  #9FB0C9;   /* secondary text */
+    --paper-faint:#647693;   /* captions */
+    --good:       #57E2A5;
+    --bad:        #FF6B6B;
+    --maxw: 1080px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  }
+
+  /* Display face: a tight, confident grotesk feel via system stack weight ramp */
+  h1,h2,h3,.display{
+    font-family:"Inter",sans-serif;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+  .mono{
+    font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+  }
+
+  a{color:inherit}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ---------- Blueprint grid backdrop ---------- */
+  .grid-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    opacity:0.20;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+  }
+  .content{position:relative;z-index:1}
+
+  /* ---------- Sticky buy bar ---------- */
+  .stickybar{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(11,18,32,0.86);
+    backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+    transform:translateY(110%);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .stickybar.show{transform:translateY(0)}
+  .stickybar .inner{
+    max-width:var(--maxw);margin:0 auto;padding:12px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .stickybar .sb-left{display:flex;align-items:baseline;gap:10px;min-width:0}
+  .stickybar .sb-title{font-weight:700;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .stickybar .sb-price{color:var(--amber);font-weight:800}
+  .stickybar .sb-was{color:var(--paper-faint);text-decoration:line-through;font-size:.85rem}
+  @media (max-width:640px){ .stickybar .sb-title{display:none} }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    background:linear-gradient(180deg,var(--amber),var(--amber-deep));
+    color:#2A1804;font-weight:800;letter-spacing:-0.01em;
+    padding:16px 28px;border-radius:12px;border:0;
+    font-size:1.05rem;cursor:pointer;text-decoration:none;white-space:nowrap;
+    box-shadow:0 8px 28px -8px rgba(255,178,62,.55), inset 0 1px 0 rgba(255,255,255,.35);
+    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px -8px rgba(255,178,62,.7), inset 0 1px 0 rgba(255,255,255,.35)}
+  .btn:active{transform:translateY(0)}
+  .btn:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+  .btn .arrow{font-size:1.1em;transition:transform .15s}
+  .btn:hover .arrow{transform:translateX(3px)}
+  .btn-sm{padding:11px 18px;font-size:.95rem;border-radius:10px}
+
+  /* ---------- Eyebrow / labels ---------- */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:ui-monospace,monospace;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--cyan);
+    border:1px solid var(--line);border-radius:999px;
+    padding:7px 14px;background:rgba(70,216,230,.06);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:64px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  @media (max-width:880px){ .hero-grid{grid-template-columns:1fr;gap:36px} }
+
+  .hero h1{
+    font-size:clamp(2.5rem,6vw,4.1rem);
+    margin:22px 0 18px;
+  }
+  .hero h1 .turn{
+    color:var(--cyan);
+    position:relative;white-space:nowrap;
+  }
+  .hero .sub{
+    font-size:clamp(1.05rem,2.2vw,1.28rem);
+    color:var(--paper-dim);max-width:36ch;margin-bottom:28px;
+  }
+  .hero .sub strong{color:var(--paper)}
+
+  .hero-cta{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .price-tag{display:flex;align-items:baseline;gap:10px}
+  .price-now{font-size:2rem;font-weight:800;color:var(--amber);letter-spacing:-.02em}
+  .price-was{font-size:1.1rem;color:var(--paper-faint);text-decoration:line-through}
+  .price-save{font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--amber);border:1px solid var(--amber-deep);border-radius:6px;padding:3px 7px}
+
+  .trust-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;color:var(--paper-dim);font-size:.9rem}
+  .trust-row span{display:inline-flex;align-items:center;gap:7px}
+  .trust-row .ck{color:var(--good);font-weight:800}
+
+  /* ---------- Phone mock in hero ---------- */
+  .device{
+    position:relative;justify-self:center;
+    width:248px;aspect-ratio:9/19.2;
+    background:linear-gradient(160deg,#1c2942,#0d1626);
+    border:3px solid #2b3a57;border-radius:34px;padding:10px;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(70,216,230,.12);
+    animation:float 6s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(-1.5deg)}}
+  .device .screen{
+    width:100%;height:100%;border-radius:24px;overflow:hidden;
+    background:radial-gradient(120% 80% at 50% 0%, #16314a, #0a1322);
+    display:flex;flex-direction:column;
+  }
+  .device .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:78px;height:18px;background:#0a1322;border-radius:0 0 12px 12px;z-index:3}
+  .scr-pad{padding:34px 16px 16px;display:flex;flex-direction:column;height:100%}
+  .scr-icon{width:62px;height:62px;border-radius:16px;margin:0 auto 12px;
+    background:linear-gradient(150deg,var(--cyan),var(--cyan-deep));
+    display:flex;align-items:center;justify-content:center;font-size:30px;
+    box-shadow:0 10px 24px -8px rgba(70,216,230,.6)}
+  .scr-title{text-align:center;font-weight:800;font-size:.95rem}
+  .scr-meta{text-align:center;color:var(--paper-faint);font-size:.7rem;margin-bottom:14px}
+  .scr-bars{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .scr-bar{height:9px;border-radius:5px;background:#1d2c45}
+  .scr-bar.f{background:linear-gradient(90deg,var(--cyan-deep),transparent)}
+  .scr-get{margin-top:auto;background:var(--amber);color:#2A1804;font-weight:800;text-align:center;
+    padding:10px;border-radius:10px;font-size:.85rem}
+  .device .stamp{
+    position:absolute;top:-14px;right:-14px;rotate:8deg;
+    background:var(--amber);color:#2A1804;font-family:ui-monospace,monospace;
+    font-size:.62rem;font-weight:800;letter-spacing:.05em;padding:6px 9px;border-radius:7px;
+    box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
+
+  /* ---------- Section frame ---------- */
+  section{padding:56px 0;position:relative}
+  .sec-head{max-width:62ch;margin-bottom:38px}
+  .sec-head h2{font-size:clamp(1.7rem,4vw,2.6rem);margin:14px 0 12px}
+  .sec-head p{color:var(--paper-dim);font-size:1.08rem}
+
+  /* ---------- "The expensive way" cost strip ---------- */
+  .costs{background:linear-gradient(180deg,var(--ink-2),var(--ink));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cost-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media (max-width:560px){ .cost-cards{grid-template-columns:1fr} }
+  .cost-card{background:var(--ink-3);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .cost-card .amt{font-family:ui-monospace,monospace;font-size:1.5rem;font-weight:800;color:var(--bad)}
+  .cost-card .lbl{color:var(--paper-dim);margin-top:6px;font-size:.95rem}
+  .cost-foot{margin-top:26px;font-size:1.12rem;color:var(--paper)}
+  .cost-foot b{color:var(--cyan)}
+
+  /* ---------- What's inside / chapters ---------- */
+  .chapters{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;counter-reset:ch}
+  @media (max-width:760px){ .chapters{grid-template-columns:1fr} }
+  .ch{
+    display:flex;gap:16px;align-items:flex-start;
+    background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:18px 20px;
+    transition:border-color .2s, transform .2s;
+  }
+  .ch:hover{border-color:var(--cyan-deep);transform:translateY(-2px)}
+  .ch .num{
+    counter-increment:ch;
+    font-family:ui-monospace,monospace;font-size:.8rem;font-weight:800;
+    color:var(--ink);background:var(--cyan);border-radius:7px;
+    min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .ch .num::before{content:counter(ch,decimal-leading-zero)}
+  .ch .t{font-weight:700;font-size:1rem;line-height:1.3}
+  .ch .d{color:var(--paper-faint);font-size:.86rem;margin-top:3px}
+
+  /* ---------- For/Not for ---------- */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:760px){ .twocol{grid-template-columns:1fr} }
+  .panel{border-radius:16px;padding:26px;border:1px solid var(--line)}
+  .panel.yes{background:linear-gradient(180deg,rgba(87,226,165,.07),transparent)}
+  .panel.no{background:linear-gradient(180deg,rgba(255,107,107,.06),transparent)}
+  .panel h3{font-size:1.15rem;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .panel ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .panel li{display:flex;gap:11px;color:var(--paper-dim);font-size:.97rem;line-height:1.45}
+  .panel.yes li::before{content:"✓";color:var(--good);font-weight:800;flex-shrink:0}
+  .panel.no li::before{content:"✕";color:var(--bad);font-weight:800;flex-shrink:0}
+
+  /* ---------- Author ---------- */
+  .author{position:relative;overflow:hidden;
+    background:linear-gradient(160deg,var(--ink-2),var(--ink-3));border:1px solid var(--line);border-radius:18px;padding:38px 40px}
+  .author .quote-mark{
+    position:absolute;top:-18px;right:18px;font-family:Georgia,"Times New Roman",serif;
+    font-size:11rem;line-height:1;color:var(--cyan);opacity:.10;pointer-events:none;user-select:none;font-weight:800;
+  }
+  .author .who{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);
+    margin-bottom:18px;
+  }
+  .author .who .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+  .author p{color:var(--paper-dim);position:relative;max-width:62ch}
+  .author .sig{margin-top:16px;font-weight:800;color:var(--paper);letter-spacing:-.01em;
+    display:inline-flex;align-items:center;gap:10px;font-size:1.05rem}
+  .author .sig::before{content:"";width:26px;height:2px;background:var(--cyan);border-radius:2px}
+
+  /* ---------- Guarantee ---------- */
+  .guarantee{
+    text-align:center;border:1px dashed var(--cyan-deep);border-radius:18px;
+    background:rgba(70,216,230,.04);padding:34px;max-width:640px;margin:0 auto;
+  }
+  .guarantee .seal{font-size:2.2rem}
+  .guarantee h3{font-size:1.4rem;margin:8px 0 10px}
+  .guarantee p{color:var(--paper-dim)}
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:760px;margin:0 auto}
+  details{border:1px solid var(--line);border-radius:12px;background:var(--ink-2);margin-bottom:12px;overflow:hidden}
+  details summary{
+    list-style:none;cursor:pointer;padding:18px 22px;font-weight:700;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  details summary::-webkit-details-marker{display:none}
+  details summary .pl{color:var(--cyan);font-size:1.3rem;transition:transform .2s;flex-shrink:0}
+  details[open] summary .pl{transform:rotate(45deg)}
+  details .ans{padding:0 22px 20px;color:var(--paper-dim)}
+
+  /* ---------- Final CTA ---------- */
+  .final{
+    text-align:center;
+    background:radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink));
+    border-top:1px solid var(--line);
+  }
+  .final h2{font-size:clamp(1.9rem,5vw,3rem);max-width:18ch;margin:0 auto 16px}
+  .final .price-tag{justify-content:center;margin:24px 0}
+  .final .micro{color:var(--paper-faint);font-size:.85rem;margin-top:16px}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line);padding:32px 0;color:var(--paper-faint);font-size:.85rem}
+  footer .frow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--paper-dim);text-decoration:none;margin-left:18px}
+  footer a:hover{color:var(--cyan)}
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<div class="content">
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> A no-nonsense launch guide</span>
+        <h1>From a notes-app idea to a <span class="turn">live app</span> - without losing a fortune learning how.</h1>
+        <p class="sub">The complete beginner's playbook for building and launching your first real app. <strong>No coding background needed.</strong> Just the exact steps, in order, and every expensive trap mapped out before you hit it.</p>
+
+        <div class="hero-cta">
+          <!-- ============================================= -->
+          <!-- BUY BUTTON — replace # with your Square link    -->
+          <!-- ============================================= -->
+          <a href="#" class="btn" id="buyTop" data-buy>Download Now <span class="arrow">→</span></a>
+          <div class="price-tag">
+            <span class="price-now">$29</span>
+            <span class="price-was">$59</span>
+            <span class="price-save">Launch price</span>
+          </div>
+        </div>
+
+        <div class="trust-row">
+          <span><span class="ck">✓</span> Instant download</span>
+          <span><span class="ck">✓</span> Beginner-proof, plain English</span>
+          <span><span class="ck">✓</span> One-time payment</span>
+        </div>
+      </div>
+
+      <!-- phone mock -->
+      <div class="device" aria-hidden="true">
+        <div class="stamp">YOUR APP →</div>
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="scr-pad">
+            <div class="scr-icon">◆</div>
+            <div class="scr-title">Your First App</div>
+            <div class="scr-meta">★ ★ ★ ★ ★ &nbsp;Live on the App Store</div>
+            <div class="scr-bars">
+              <div class="scr-bar f" style="width:90%"></div>
+              <div class="scr-bar" style="width:70%"></div>
+              <div class="scr-bar f" style="width:80%"></div>
+              <div class="scr-bar" style="width:55%"></div>
+            </div>
+            <div class="scr-get">GET</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== THE EXPENSIVE WAY ===================== -->
+  <section class="costs">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow"><span class="dot"></span> Why this guide exists</span>
+        <h2>I built my first app the expensive way. Here's the receipt.</h2>
+        <p>Nobody handed me a map. So I paid for every wrong turn; the wrong builder, the wrong tools, the "wait, I have to pay for that too?" surprises. This guide is everything I wish someone had told me on day one.</p>
+      </div>
+      <div class="cost-cards">
+        <div class="cost-card reveal">
+          <div class="amt">$250</div>
+          <div class="lbl">Prompt credits I burned through on an AI app builder, "just one more tweak" adds up faster than you'd believe.</div>
+        </div>
+        <div class="cost-card reveal">
+          <div class="amt">$229 + $179/yr <span style="font-size:.7em;font-weight:600;color:var(--paper-faint)">+ tax</span></div>
+          <div class="lbl">A "wrapper" service I only discovered I needed <em>after</em> I'd finished building, just to make my app publishable at all.</div>
+        </div>
+        <div class="cost-card reveal">
+          <div class="amt">$500</div>
+          <div class="lbl">A MacBook I bought because I was told I needed one to submit to Apple. (You don't. I'll show you why.)</div>
+        </div>
+        <div class="cost-card reveal">
+          <div class="amt">Months gone</div>
+          <div class="lbl">Rebuilding my entire app from scratch when the first tool capped out the moment I got my first couple hundred paying users.</div>
+        </div>
+      </div>
+      <p class="cost-foot reveal">The total damage was over a thousand dollars and months of my life. <b>You can skip all of it for $29.</b></p>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT'S INSIDE ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow"><span class="dot"></span> What's inside</span>
+        <h2>13 chapters. One straight line from idea to launched.</h2>
+        <p>No fluff, no theory, no 400-page textbook. Each chapter ends with one action step that actually moves your app forward, so by the end, it's built and live.</p>
+      </div>
+      <div class="chapters">
+        <div class="ch reveal"><div class="num"></div><div><div class="t">Finding an idea worth building</div><div class="d">Validate it in an afternoon before you spend a dollar.</div></div></div>
+        <div class="ch reveal"><div class="num"></div><div><div class="t">What it'll actually cost you</div><div class="d">Every fee, up front. Zero surprises.</div></div></div>
+        <div class="ch reveal"><div class="num"></div><div><div class="t">App builders to avoid (and why)</div><div class="d">The traps that cost me the most, flagged in advance.</div></div></div>
+        <div class="ch reveal"><div class="num"></div><div><div class="t">The builder I actually use</div><div class="d">The one tool that won't trap your work or your wallet.</div></div></div>
+        <div class="ch reveal"><div class="num"></div><div><div class="t">Setting up your accounts early</div><div class="d">The slow steps to start now so you're not stuck waiting later.</div></div></div>
+        <div class="ch reveal"><div class="num"></div><div><div class="t">Building it - tips &amp; tricks</div><div class="d">The exact order that keeps you moving instead of stuck.</div></div></div>
+        <div class="ch reveal"><div class="num"></div><div><div class="t">How your app makes money</div><div class="d">Pick the right model without overbuilding.</div></div></div>
+        <div class="ch reveal"><div class="num"></div><div><div class="t">A simple landing page (free hosting)</div><div class="d">Yes, the kind of page you're reading right now.</div></div></div>
+      </div>
+      <p style="text-align:center;margin-top:22px;color:var(--paper-faint)">…plus 5 more chapters; through the legal pages, your visuals, beta testing, submitting to both stores, and <span style="color:var(--paper-dim)">your first-30-days playbook once you're live.</span></p>
+    </div>
+  </section>
+
+  <!-- ===================== FOR / NOT FOR ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow"><span class="dot"></span> Is this for you?</span>
+        <h2>Built for the person who's overwhelmed by all the choices and doesn't know how to get started.</h2>
+      </div>
+      <div class="twocol">
+        <div class="panel yes reveal">
+          <h3>This is for you if…</h3>
+          <ul>
+            <li>You've got an app idea and zero technical background</li>
+            <li>You've searched "how to build an app" and drowned in conflicting advice</li>
+            <li>You want one proven path, not 50 contradictory tutorials</li>
+            <li>You'd rather not lose hundreds of dollars learning what doesn't work</li>
+            <li>You're willing to follow steps in order and actually do them</li>
+          </ul>
+        </div>
+        <div class="panel no reveal">
+          <h3>This isn't for you if…</h3>
+          <ul>
+            <li>You're already an experienced developer (you don't need this)</li>
+            <li>You want a magic button that builds the app while you sleep</li>
+            <li>You're not willing to spend a few focused evenings on it</li>
+            <li>You're looking for a get-rich-quick scheme - this is real work, made simple</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AUTHOR ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="author reveal">
+        <span class="quote-mark">&rdquo;</span>
+        <span class="who"><span class="dot"></span> The person behind this</span>
+        <div>
+          <p>I'm Sandra, and I'm not a developer by training. For about two years I'd been chasing the same thing a lot of people quietly want, a way to build something of my own that could eventually earn on its own, instead of trading every hour for a paycheck. Apps were the path I landed on. The problem was, I had no clue where to start.</p>
+          <p style="margin-top:12px">So I made nearly every mistake you can make; the wrong tools, the wasted money, the dead ends, and came out the other side with a live app and a very clear map of the path I <em>should</em> have taken. I wrote this so you don't have to pay the same tuition I did. Everything in here is the real, current, tested path, the one I'd hand my past self if I could.</p>
+          <div class="sig">Sandra</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ALL SALES FINAL ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="guarantee reveal">
+        <div class="seal">📲</div>
+        <h3>Instant access. Yours to keep.</h3>
+        <p>The moment you check out, the full guide is delivered straight to your inbox, start reading in minutes. Because this is a digital product delivered instantly, all sales are final. I've put everything I learned the hard way into these pages, and I'm confident it's the map you've been missing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+        <span class="eyebrow"><span class="dot"></span> Questions</span>
+        <h2>The stuff people ask before buying.</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal"><summary>Do I really need to know how to code? <span class="pl">+</span></summary><div class="ans">No. The whole guide is built around a visual, drag-and-drop builder. On the rare occasions a small piece of code is needed, I show you exactly how to get it written for you in plain English and paste it in. You never have to write code from scratch.</div></details>
+        <details class="reveal"><summary>What format is the guide? <span class="pl">+</span></summary><div class="ans">A clean, beautifully formatted PDF you can read on any device; phone, tablet, laptop. You get it instantly after purchase. 53 pages, 13 chapters, no filler.</div></details>
+        <details class="reveal"><summary>Will this be out of date in a month? <span class="pl">+</span></summary><div class="ans">The guide teaches you the <em>principles</em> and the path, not just "click this exact button", so it holds up even as tools update their screens. Where a step changes often, I point you to the always-current official walkthrough instead of freezing a screenshot.</div></details>
+        <details class="reveal"><summary>How much will I need to spend to actually launch? <span class="pl">+</span></summary><div class="ans">I lay out every real cost up front in Chapter 2 - no surprises. Most of it is small or one-time. I also show you exactly where people waste money needlessly so you don't.</div></details>
+        <details class="reveal"><summary>How fast can I get this? <span class="pl">+</span></summary><div class="ans">Instantly. The moment your payment goes through, your download arrives by email and on the confirmation page. Start reading in two minutes.</div></details>
+        <details class="reveal"><summary>What if it's not for me? <span class="pl">+</span></summary><div class="ans">This guide is built for total beginners who feel overwhelmed and don't know where to start, if that's you, it's made for exactly your situation. Because it's a digital product you get instantly, all sales are final, so have a look through everything on this page first and make sure it's the right fit before you buy.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FINAL CTA ===================== -->
+  <section class="final">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span> Launch price - going up to $59 soon</span>
+      <h2 class="reveal" style="margin-top:18px">Your idea has been sitting in your head long enough.</h2>
+      <p class="reveal" style="color:var(--paper-dim);max-width:48ch;margin:0 auto">Get the exact map, skip the expensive detours, and have something real in the stores. Everything you need is in here.</p>
+
+      <div class="price-tag reveal">
+        <span class="price-now" style="font-size:2.6rem">$29</span>
+        <span class="price-was">$59</span>
+        <span class="price-save">Save $30 today</span>
+      </div>
+
+      <a href="#" class="btn reveal" style="font-size:1.15rem;padding:18px 36px" data-buy>Download Now <span class="arrow">→</span></a>
+      <p class="micro reveal">Instant PDF download · One-time payment · All sales final</p>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap frow">
+      <div>© <span id="yr"></span> firstapplaunch.com · From Idea to App Store</div>
+      <div>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="mailto:admin@firstapplaunch.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ===================== STICKY BUY BAR ===================== -->
+<div class="stickybar" id="sticky">
+  <div class="inner">
+    <div class="sb-left">
+      <span class="sb-title">From Idea to App Store - the complete guide</span>
+      <span class="sb-price">$29</span>
+      <span class="sb-was">$59</span>
+    </div>
+    <a href="#" class="btn btn-sm" data-buy>Download Now <span class="arrow">→</span></a>
+  </div>
+</div>
+
+<script>
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // sticky bar: show after hero scrolls away, hide near the final CTA
+  const sticky = document.getElementById('sticky');
+  const final = document.querySelector('.final');
+  window.addEventListener('scroll', ()=>{
+    const y = window.scrollY;
+    const finalTop = final.getBoundingClientRect().top + window.scrollY - window.innerHeight;
+    if(y > 560 && y < finalTop){ sticky.classList.add('show'); }
+    else { sticky.classList.remove('show'); }
+  }, {passive:true});
+
+  // ============================================================
+  // BUY BUTTONS — all elements with data-buy point to checkout.
+  // Replace the URL below with your Square payment link, and
+  // every button on the page updates at once.
+  // Optionally fire the Meta "InitiateCheckout" event on click.
+  // ============================================================
+  const SQUARE_CHECKOUT_URL = "#"; // <-- PASTE YOUR SQUARE LINK HERE
+  document.querySelectorAll('[data-buy]').forEach(b=>{
+    b.setAttribute('href', SQUARE_CHECKOUT_URL);
+    b.addEventListener('click', ()=>{
+      if(window.fbq){ fbq('track','InitiateCheckout',{value:29.00,currency:'USD'}); }
+    });
+  });
+</script>
+</body>
+</html>
