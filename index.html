@@ -560,11 +560,11 @@
   // every button on the page updates at once.
   // Optionally fire the Meta "InitiateCheckout" event on click.
   // ============================================================
-  const SQUARE_CHECKOUT_URL = "#"; // <-- PASTE YOUR SQUARE LINK HERE
+  const SQUARE_CHECKOUT_URL = "https://square.link/u/8Rpz7XKK";
   document.querySelectorAll('[data-buy]').forEach(b=>{
     b.setAttribute('href', SQUARE_CHECKOUT_URL);
     b.addEventListener('click', ()=>{
-      if(window.fbq){ fbq('track','InitiateCheckout',{value:29.00,currency:'USD'}); }
+      if(window.fbq){ fbq('track','InitiateCheckout',{value:29.00,currency:'CAD'}); }
     });
   });
 </script>
