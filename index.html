@@ -6,11 +6,6 @@
 <title>From Idea to App Store - The No-Nonsense Launch Guide</title>
 <meta name="description" content="The beginner's guide to building and launching your first app. No coding background needed. Everything I wish someone had told me before I lost time and money figuring it out the hard way.">
 
-<!-- ============================================================= -->
-<!-- META PIXEL — paste your Pixel ID where it says YOUR_PIXEL_ID  -->
-<!-- (You'll need this so Facebook can track who buys. Set it up   -->
-<!-- in Meta Events Manager, then drop the ID in below.)           -->
-<!-- ============================================================= -->
 <!--
 <script>
   !function(f,b,e,v,n,t,s)
@@ -27,24 +22,18 @@
 -->
 
 <style>
-  /* ---------- Design tokens ----------
-     Palette: "blueprint at dawn" — the page reads like a build plan that
-     turns into a launch. Deep ink navy ground, blueprint cyan as the
-     working accent, a single warm signal-amber reserved ONLY for the
-     price + buy action so the eye always lands on the sale.
-  */
   :root{
-    --ink:        #0B1220;   /* near-black navy ground */
-    --ink-2:      #111B2E;   /* raised surface */
-    --ink-3:      #18243B;   /* card surface */
-    --line:       #243352;   /* hairline */
-    --cyan:       #46D8E6;   /* blueprint accent */
+    --ink:        #0B1220;
+    --ink-2:      #111B2E;
+    --ink-3:      #18243B;
+    --line:       #243352;
+    --cyan:       #46D8E6;
     --cyan-deep:  #1FA8C4;
-    --amber:      #FFB23E;   /* the ONLY action/price color */
+    --amber:      #FFB23E;
     --amber-deep: #F59412;
-    --paper:      #EFF3FA;   /* primary text */
-    --paper-dim:  #9FB0C9;   /* secondary text */
-    --paper-faint:#647693;   /* captions */
+    --paper:      #EFF3FA;
+    --paper-dim:  #9FB0C9;
+    --paper-faint:#647693;
     --good:       #57E2A5;
     --bad:        #FF6B6B;
     --maxw: 1080px;
@@ -64,21 +53,16 @@
     *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   }
 
-  /* Display face: a tight, confident grotesk feel via system stack weight ramp */
   h1,h2,h3,.display{
     font-family:"Inter",sans-serif;
     font-weight:800;
     letter-spacing:-0.02em;
     line-height:1.05;
   }
-  .mono{
-    font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
-  }
-
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;}
   a{color:inherit}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-  /* ---------- Blueprint grid backdrop ---------- */
   .grid-bg{
     position:fixed;inset:0;z-index:0;pointer-events:none;
     background-image:
@@ -91,7 +75,6 @@
   }
   .content{position:relative;z-index:1}
 
-  /* ---------- Sticky buy bar ---------- */
   .stickybar{
     position:fixed;left:0;right:0;bottom:0;z-index:50;
     background:rgba(11,18,32,0.86);
@@ -111,7 +94,6 @@
   .stickybar .sb-was{color:var(--paper-faint);text-decoration:line-through;font-size:.85rem}
   @media (max-width:640px){ .stickybar .sb-title{display:none} }
 
-  /* ---------- Buttons ---------- */
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:10px;
     background:linear-gradient(180deg,var(--amber),var(--amber-deep));
@@ -128,7 +110,6 @@
   .btn:hover .arrow{transform:translateX(3px)}
   .btn-sm{padding:11px 18px;font-size:.95rem;border-radius:10px}
 
-  /* ---------- Eyebrow / labels ---------- */
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-family:ui-monospace,monospace;font-size:.72rem;letter-spacing:.22em;
@@ -138,37 +119,23 @@
   }
   .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
 
-  /* ---------- HERO ---------- */
   header.hero{padding:64px 0 40px}
   .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
   @media (max-width:880px){ .hero-grid{grid-template-columns:1fr;gap:36px} }
-
-  .hero h1{
-    font-size:clamp(2.5rem,6vw,4.1rem);
-    margin:22px 0 18px;
-  }
-  .hero h1 .turn{
-    color:var(--cyan);
-    position:relative;white-space:nowrap;
-  }
-  .hero .sub{
-    font-size:clamp(1.05rem,2.2vw,1.28rem);
-    color:var(--paper-dim);max-width:36ch;margin-bottom:28px;
-  }
+  .hero h1{font-size:clamp(2.5rem,6vw,4.1rem);margin:22px 0 18px;}
+  .hero h1 .turn{color:var(--cyan);position:relative;white-space:nowrap;}
+  .hero .sub{font-size:clamp(1.05rem,2.2vw,1.28rem);color:var(--paper-dim);max-width:36ch;margin-bottom:28px;}
   .hero .sub strong{color:var(--paper)}
-
   .hero-cta{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
   .price-tag{display:flex;align-items:baseline;gap:10px}
   .price-now{font-size:2rem;font-weight:800;color:var(--amber);letter-spacing:-.02em}
   .price-was{font-size:1.1rem;color:var(--paper-faint);text-decoration:line-through}
   .price-save{font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--amber);border:1px solid var(--amber-deep);border-radius:6px;padding:3px 7px}
-
   .trust-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;color:var(--paper-dim);font-size:.9rem}
   .trust-row span{display:inline-flex;align-items:center;gap:7px}
   .trust-row .ck{color:var(--good);font-weight:800}
 
-  /* ---------- Phone mock in hero ---------- */
   .device{
     position:relative;justify-self:center;
     width:248px;aspect-ratio:9/19.2;
@@ -178,37 +145,23 @@
     animation:float 6s ease-in-out infinite;
   }
   @keyframes float{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(-1.5deg)}}
-  .device .screen{
-    width:100%;height:100%;border-radius:24px;overflow:hidden;
-    background:radial-gradient(120% 80% at 50% 0%, #16314a, #0a1322);
-    display:flex;flex-direction:column;
-  }
+  .device .screen{width:100%;height:100%;border-radius:24px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%, #16314a, #0a1322);display:flex;flex-direction:column;}
   .device .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:78px;height:18px;background:#0a1322;border-radius:0 0 12px 12px;z-index:3}
   .scr-pad{padding:34px 16px 16px;display:flex;flex-direction:column;height:100%}
-  .scr-icon{width:62px;height:62px;border-radius:16px;margin:0 auto 12px;
-    background:linear-gradient(150deg,var(--cyan),var(--cyan-deep));
-    display:flex;align-items:center;justify-content:center;font-size:30px;
-    box-shadow:0 10px 24px -8px rgba(70,216,230,.6)}
+  .scr-icon{width:62px;height:62px;border-radius:16px;margin:0 auto 12px;background:linear-gradient(150deg,var(--cyan),var(--cyan-deep));display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 10px 24px -8px rgba(70,216,230,.6)}
   .scr-title{text-align:center;font-weight:800;font-size:.95rem}
   .scr-meta{text-align:center;color:var(--paper-faint);font-size:.7rem;margin-bottom:14px}
   .scr-bars{display:flex;flex-direction:column;gap:8px;margin-top:6px}
   .scr-bar{height:9px;border-radius:5px;background:#1d2c45}
   .scr-bar.f{background:linear-gradient(90deg,var(--cyan-deep),transparent)}
-  .scr-get{margin-top:auto;background:var(--amber);color:#2A1804;font-weight:800;text-align:center;
-    padding:10px;border-radius:10px;font-size:.85rem}
-  .device .stamp{
-    position:absolute;top:-14px;right:-14px;rotate:8deg;
-    background:var(--amber);color:#2A1804;font-family:ui-monospace,monospace;
-    font-size:.62rem;font-weight:800;letter-spacing:.05em;padding:6px 9px;border-radius:7px;
-    box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
+  .scr-get{margin-top:auto;background:var(--amber);color:#2A1804;font-weight:800;text-align:center;padding:10px;border-radius:10px;font-size:.85rem}
+  .device .stamp{position:absolute;top:-14px;right:-14px;rotate:8deg;background:var(--amber);color:#2A1804;font-family:ui-monospace,monospace;font-size:.62rem;font-weight:800;letter-spacing:.05em;padding:6px 9px;border-radius:7px;box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
 
-  /* ---------- Section frame ---------- */
   section{padding:56px 0;position:relative}
   .sec-head{max-width:62ch;margin-bottom:38px}
   .sec-head h2{font-size:clamp(1.7rem,4vw,2.6rem);margin:14px 0 12px}
   .sec-head p{color:var(--paper-dim);font-size:1.08rem}
 
-  /* ---------- "The expensive way" cost strip ---------- */
   .costs{background:linear-gradient(180deg,var(--ink-2),var(--ink));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .cost-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
   @media (max-width:560px){ .cost-cards{grid-template-columns:1fr} }
@@ -218,26 +171,15 @@
   .cost-foot{margin-top:26px;font-size:1.12rem;color:var(--paper)}
   .cost-foot b{color:var(--cyan)}
 
-  /* ---------- What's inside / chapters ---------- */
   .chapters{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;counter-reset:ch}
   @media (max-width:760px){ .chapters{grid-template-columns:1fr} }
-  .ch{
-    display:flex;gap:16px;align-items:flex-start;
-    background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:18px 20px;
-    transition:border-color .2s, transform .2s;
-  }
+  .ch{display:flex;gap:16px;align-items:flex-start;background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:18px 20px;transition:border-color .2s, transform .2s;}
   .ch:hover{border-color:var(--cyan-deep);transform:translateY(-2px)}
-  .ch .num{
-    counter-increment:ch;
-    font-family:ui-monospace,monospace;font-size:.8rem;font-weight:800;
-    color:var(--ink);background:var(--cyan);border-radius:7px;
-    min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  }
+  .ch .num{counter-increment:ch;font-family:ui-monospace,monospace;font-size:.8rem;font-weight:800;color:var(--ink);background:var(--cyan);border-radius:7px;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .ch .num::before{content:counter(ch,decimal-leading-zero)}
   .ch .t{font-weight:700;font-size:1rem;line-height:1.3}
   .ch .d{color:var(--paper-faint);font-size:.86rem;margin-top:3px}
 
-  /* ---------- For/Not for ---------- */
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   @media (max-width:760px){ .twocol{grid-template-columns:1fr} }
   .panel{border-radius:16px;padding:26px;border:1px solid var(--line)}
@@ -249,64 +191,83 @@
   .panel.yes li::before{content:"✓";color:var(--good);font-weight:800;flex-shrink:0}
   .panel.no li::before{content:"✕";color:var(--bad);font-weight:800;flex-shrink:0}
 
-  /* ---------- Author ---------- */
-  .author{position:relative;overflow:hidden;
-    background:linear-gradient(160deg,var(--ink-2),var(--ink-3));border:1px solid var(--line);border-radius:18px;padding:38px 40px}
-  .author .quote-mark{
-    position:absolute;top:-18px;right:18px;font-family:Georgia,"Times New Roman",serif;
-    font-size:11rem;line-height:1;color:var(--cyan);opacity:.10;pointer-events:none;user-select:none;font-weight:800;
-  }
-  .author .who{
-    display:inline-flex;align-items:center;gap:8px;
-    font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);
-    margin-bottom:18px;
-  }
+  .author{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--ink-2),var(--ink-3));border:1px solid var(--line);border-radius:18px;padding:38px 40px}
+  .author .quote-mark{position:absolute;top:-18px;right:18px;font-family:Georgia,"Times New Roman",serif;font-size:11rem;line-height:1;color:var(--cyan);opacity:.10;pointer-events:none;user-select:none;font-weight:800;}
+  .author .who{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px;}
   .author .who .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
   .author p{color:var(--paper-dim);position:relative;max-width:62ch}
-  .author .sig{margin-top:16px;font-weight:800;color:var(--paper);letter-spacing:-.01em;
-    display:inline-flex;align-items:center;gap:10px;font-size:1.05rem}
+  .author .sig{margin-top:16px;font-weight:800;color:var(--paper);letter-spacing:-.01em;display:inline-flex;align-items:center;gap:10px;font-size:1.05rem}
   .author .sig::before{content:"";width:26px;height:2px;background:var(--cyan);border-radius:2px}
 
-  /* ---------- Guarantee ---------- */
-  .guarantee{
-    text-align:center;border:1px dashed var(--cyan-deep);border-radius:18px;
-    background:rgba(70,216,230,.04);padding:34px;max-width:640px;margin:0 auto;
-  }
+  .guarantee{text-align:center;border:1px dashed var(--cyan-deep);border-radius:18px;background:rgba(70,216,230,.04);padding:34px;max-width:640px;margin:0 auto;}
   .guarantee .seal{font-size:2.2rem}
   .guarantee h3{font-size:1.4rem;margin:8px 0 10px}
   .guarantee p{color:var(--paper-dim)}
 
-  /* ---------- FAQ ---------- */
   .faq{max-width:760px;margin:0 auto}
   details{border:1px solid var(--line);border-radius:12px;background:var(--ink-2);margin-bottom:12px;overflow:hidden}
-  details summary{
-    list-style:none;cursor:pointer;padding:18px 22px;font-weight:700;
-    display:flex;justify-content:space-between;align-items:center;gap:16px;
-  }
+  details summary{list-style:none;cursor:pointer;padding:18px 22px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:16px;}
   details summary::-webkit-details-marker{display:none}
   details summary .pl{color:var(--cyan);font-size:1.3rem;transition:transform .2s;flex-shrink:0}
   details[open] summary .pl{transform:rotate(45deg)}
   details .ans{padding:0 22px 20px;color:var(--paper-dim)}
 
-  /* ---------- Final CTA ---------- */
-  .final{
-    text-align:center;
-    background:radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink));
-    border-top:1px solid var(--line);
-  }
+  .final{text-align:center;background:radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink));border-top:1px solid var(--line);}
   .final h2{font-size:clamp(1.9rem,5vw,3rem);max-width:18ch;margin:0 auto 16px}
   .final .price-tag{justify-content:center;margin:24px 0}
   .final .micro{color:var(--paper-faint);font-size:.85rem;margin-top:16px}
 
-  /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line);padding:32px 0;color:var(--paper-faint);font-size:.85rem}
   footer .frow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
   footer a{color:var(--paper-dim);text-decoration:none;margin-left:18px}
   footer a:hover{color:var(--cyan)}
 
-  /* ---------- reveal on scroll ---------- */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
   .reveal.in{opacity:1;transform:none}
+
+  /* ---- OPT-IN MODAL ---- */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(5,10,20,0.82);backdrop-filter:blur(6px);
+    align-items:center;justify-content:center;padding:24px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:linear-gradient(180deg,var(--ink-2),var(--ink-3));
+    border:1px solid var(--line);border-radius:20px;
+    padding:40px 36px;max-width:440px;width:100%;
+    box-shadow:0 32px 64px rgba(0,0,0,.6);
+    position:relative;
+  }
+  .modal-close{
+    position:absolute;top:16px;right:18px;background:none;border:none;
+    color:var(--paper-faint);font-size:1.4rem;cursor:pointer;line-height:1;padding:4px;
+  }
+  .modal-close:hover{color:var(--paper)}
+  .modal-box .modal-icon{font-size:2rem;margin-bottom:12px}
+  .modal-box h3{font-size:1.35rem;margin-bottom:8px}
+  .modal-box .modal-sub{color:var(--paper-dim);font-size:.95rem;margin-bottom:24px}
+  .modal-field{margin-bottom:16px}
+  .modal-field label{display:block;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:7px}
+  .modal-field input{
+    width:100%;background:var(--ink);border:1px solid var(--line);border-radius:10px;
+    padding:13px 16px;color:var(--paper);font-size:1rem;font-family:inherit;
+    transition:border-color .2s;outline:none;
+  }
+  .modal-field input:focus{border-color:var(--cyan)}
+  .modal-field input::placeholder{color:var(--paper-faint)}
+  .modal-btn{
+    width:100%;margin-top:8px;
+    background:linear-gradient(180deg,var(--amber),var(--amber-deep));
+    color:#2A1804;font-weight:800;font-size:1.05rem;font-family:inherit;
+    padding:15px;border-radius:12px;border:none;cursor:pointer;
+    box-shadow:0 8px 28px -8px rgba(255,178,62,.55);
+    transition:transform .15s,box-shadow .15s;
+  }
+  .modal-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px -8px rgba(255,178,62,.7)}
+  .modal-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .modal-note{text-align:center;font-size:.78rem;color:var(--paper-faint);margin-top:12px}
+  .modal-error{color:#FF6B6B;font-size:.85rem;margin-top:8px;display:none}
 </style>
 </head>
 <body>
@@ -314,7 +275,6 @@
 
 <div class="content">
 
-  <!-- ===================== HERO ===================== -->
   <header class="hero">
     <div class="wrap hero-grid">
       <div>
@@ -323,9 +283,6 @@
         <p class="sub">The complete beginner's playbook for building and launching your first real app. <strong>No coding background needed.</strong> Just the exact steps, in order, and every expensive trap mapped out before you hit it.</p>
 
         <div class="hero-cta">
-          <!-- ============================================= -->
-          <!-- BUY BUTTON — https://square.link/u/8Rpz7XKK    -->
-          <!-- ============================================= -->
           <a href="#" class="btn" id="buyTop" data-buy>Download Now <span class="arrow">→</span></a>
           <div class="price-tag">
             <span class="price-now">$29</span>
@@ -341,7 +298,6 @@
         </div>
       </div>
 
-      <!-- phone mock -->
       <div class="device" aria-hidden="true">
         <div class="stamp">YOUR APP →</div>
         <div class="notch"></div>
@@ -363,7 +319,6 @@
     </div>
   </header>
 
-  <!-- ===================== THE EXPENSIVE WAY ===================== -->
   <section class="costs">
     <div class="wrap">
       <div class="sec-head reveal">
@@ -372,28 +327,15 @@
         <p>Nobody handed me a map. So I paid for every wrong turn; the wrong builder, the wrong tools, the "wait, I have to pay for that too?" surprises. This guide is everything I wish someone had told me on day one.</p>
       </div>
       <div class="cost-cards">
-        <div class="cost-card reveal">
-          <div class="amt">$250</div>
-          <div class="lbl">Prompt credits I burned through on an AI app builder, "just one more tweak" adds up faster than you'd believe.</div>
-        </div>
-        <div class="cost-card reveal">
-          <div class="amt">$229 + $179/yr <span style="font-size:.7em;font-weight:600;color:var(--paper-faint)">+ tax</span></div>
-          <div class="lbl">A "wrapper" service I only discovered I needed <em>after</em> I'd finished building, just to make my app publishable at all.</div>
-        </div>
-        <div class="cost-card reveal">
-          <div class="amt">$500</div>
-          <div class="lbl">A MacBook I bought because I was told I needed one to submit to Apple. (You don't. I'll show you why.)</div>
-        </div>
-        <div class="cost-card reveal">
-          <div class="amt">Months gone</div>
-          <div class="lbl">Rebuilding my entire app from scratch when the first tool capped out the moment I got my first couple hundred paying users.</div>
-        </div>
+        <div class="cost-card reveal"><div class="amt">$250</div><div class="lbl">Prompt credits I burned through on an AI app builder, "just one more tweak" adds up faster than you'd believe.</div></div>
+        <div class="cost-card reveal"><div class="amt">$229 + $179/yr <span style="font-size:.7em;font-weight:600;color:var(--paper-faint)">+ tax</span></div><div class="lbl">A "wrapper" service I only discovered I needed <em>after</em> I'd finished building, just to make my app publishable at all.</div></div>
+        <div class="cost-card reveal"><div class="amt">$500</div><div class="lbl">A MacBook I bought because I was told I needed one to submit to Apple. (You don't. I'll show you why.)</div></div>
+        <div class="cost-card reveal"><div class="amt">Months gone</div><div class="lbl">Rebuilding my entire app from scratch when the first tool capped out the moment I got my first couple hundred paying users.</div></div>
       </div>
       <p class="cost-foot reveal">The total damage was over a thousand dollars and months of my life. <b>You can skip all of it for $29.</b></p>
     </div>
   </section>
 
-  <!-- ===================== WHAT'S INSIDE ===================== -->
   <section>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -415,7 +357,6 @@
     </div>
   </section>
 
-  <!-- ===================== FOR / NOT FOR ===================== -->
   <section>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -446,7 +387,6 @@
     </div>
   </section>
 
-  <!-- ===================== AUTHOR ===================== -->
   <section>
     <div class="wrap">
       <div class="author reveal">
@@ -461,7 +401,6 @@
     </div>
   </section>
 
-  <!-- ===================== ALL SALES FINAL ===================== -->
   <section>
     <div class="wrap">
       <div class="guarantee reveal">
@@ -472,7 +411,6 @@
     </div>
   </section>
 
-  <!-- ===================== FAQ ===================== -->
   <section>
     <div class="wrap">
       <div class="sec-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
@@ -490,25 +428,21 @@
     </div>
   </section>
 
-  <!-- ===================== FINAL CTA ===================== -->
   <section class="final">
     <div class="wrap">
       <span class="eyebrow reveal"><span class="dot"></span> Launch price - going up to $59 soon</span>
       <h2 class="reveal" style="margin-top:18px">Your idea has been sitting in your head long enough.</h2>
       <p class="reveal" style="color:var(--paper-dim);max-width:48ch;margin:0 auto">Get the exact map, skip the expensive detours, and have something real in the stores. Everything you need is in here.</p>
-
       <div class="price-tag reveal">
         <span class="price-now" style="font-size:2.6rem">$29</span>
         <span class="price-was">$59</span>
         <span class="price-save">Save $30 today</span>
       </div>
-
       <a href="#" class="btn reveal" style="font-size:1.15rem;padding:18px 36px" data-buy>Download Now <span class="arrow">→</span></a>
       <p class="micro reveal">Instant PDF download · One-time payment · All sales final</p>
     </div>
   </section>
 
-  <!-- ===================== FOOTER ===================== -->
   <footer>
     <div class="wrap frow">
       <div>© <span id="yr"></span> firstapplaunch.com · From Idea to App Store</div>
@@ -522,7 +456,7 @@
 
 </div>
 
-<!-- ===================== STICKY BUY BAR ===================== -->
+<!-- STICKY BAR -->
 <div class="stickybar" id="sticky">
   <div class="inner">
     <div class="sb-left">
@@ -534,19 +468,37 @@
   </div>
 </div>
 
+<!-- OPT-IN MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <div class="modal-icon">📬</div>
+    <h3>Where should we send your guide?</h3>
+    <p class="modal-sub">Enter your name and email and we'll deliver the PDF straight to your inbox the moment payment goes through.</p>
+    <div class="modal-field">
+      <label for="inputName">Your first name</label>
+      <input type="text" id="inputName" placeholder="Sandra" autocomplete="given-name">
+    </div>
+    <div class="modal-field">
+      <label for="inputEmail">Email address</label>
+      <input type="email" id="inputEmail" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="modal-error" id="modalError">Please enter your name and a valid email.</div>
+    <button class="modal-btn" id="modalSubmit">Continue to checkout <span style="font-size:1.1em">→</span></button>
+    <p class="modal-note">Your guide arrives by email. No spam, ever.</p>
+  </div>
+</div>
+
 <script>
-  // year
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // reveal on scroll
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // sticky bar: show after hero scrolls away, hide near the final CTA
   const sticky = document.getElementById('sticky');
-  const final = document.querySelector('.final');
+  const final  = document.querySelector('.final');
   window.addEventListener('scroll', ()=>{
     const y = window.scrollY;
     const finalTop = final.getBoundingClientRect().top + window.scrollY - window.innerHeight;
@@ -554,18 +506,56 @@
     else { sticky.classList.remove('show'); }
   }, {passive:true});
 
-  // ============================================================
-  // BUY BUTTONS — all elements with data-buy point to checkout.
-  // Replace the URL below with your Square payment link, and
-  // every button on the page updates at once.
-  // Optionally fire the Meta "InitiateCheckout" event on click.
-  // ============================================================
   const SQUARE_CHECKOUT_URL = "https://square.link/u/8Rpz7XKK";
+  const MAKE_WEBHOOK_URL    = "https://hook.us2.make.com/urpm4rl6u31v6i35ybp6z1hzf69uehwr";
+
+  const overlay    = document.getElementById('modalOverlay');
+  const modalClose = document.getElementById('modalClose');
+  const modalBtn   = document.getElementById('modalSubmit');
+  const modalError = document.getElementById('modalError');
+
+  // All buy buttons open the modal instead of going straight to Square
   document.querySelectorAll('[data-buy]').forEach(b=>{
-    b.setAttribute('href', SQUARE_CHECKOUT_URL);
-    b.addEventListener('click', ()=>{
-      if(window.fbq){ fbq('track','InitiateCheckout',{value:29.00,currency:'CAD'}); }
+    b.addEventListener('click', (e)=>{
+      e.preventDefault();
+      overlay.classList.add('open');
+      document.getElementById('inputName').focus();
     });
+  });
+
+  // Close modal
+  modalClose.addEventListener('click', ()=> overlay.classList.remove('open'));
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) overlay.classList.remove('open'); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') overlay.classList.remove('open'); });
+
+  // Submit: validate, fire webhook, redirect to Square
+  modalBtn.addEventListener('click', async ()=>{
+    const name  = document.getElementById('inputName').value.trim();
+    const email = document.getElementById('inputEmail').value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if(!name || !emailOk){
+      modalError.style.display = 'block';
+      return;
+    }
+    modalError.style.display = 'none';
+    modalBtn.disabled = true;
+    modalBtn.textContent = 'One moment...';
+
+    // Fire webhook to Make (don't wait for response — just send and redirect)
+    try {
+      await fetch(MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ name, email }),
+        keepalive: true
+      });
+    } catch(e){ /* silent fail — don't block the buyer */ }
+
+    if(window.fbq){ fbq('track','InitiateCheckout',{value:29.00,currency:'CAD'}); }
+
+    // Redirect to Square
+    window.location.href = SQUARE_CHECKOUT_URL;
   });
 </script>
 </body>
