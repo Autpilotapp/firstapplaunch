@@ -193,6 +193,49 @@
   .panel.yes li::before{content:"✓";color:var(--good);font-weight:800;flex-shrink:0}
   .panel.no li::before{content:"✕";color:var(--bad);font-weight:800;flex-shrink:0}
 
+  /* ---- BONUS: LIVE TRAINING ---- */
+  .bonus{background:linear-gradient(180deg,var(--ink),var(--ink-2));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .bonus-card{
+    position:relative;overflow:hidden;
+    border:1px solid var(--cyan-deep);border-radius:20px;
+    padding:44px 42px;
+    background:linear-gradient(155deg,rgba(70,216,230,.09),rgba(255,178,62,.05) 70%);
+    box-shadow:0 0 0 1px rgba(70,216,230,.10), 0 30px 60px -30px rgba(0,0,0,.7);
+  }
+  .bonus-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:36px;align-items:center;position:relative;z-index:1}
+  @media (max-width:820px){ .bonus-grid{grid-template-columns:1fr;gap:28px} }
+  .bonus-glow{position:absolute;top:-50%;right:-12%;width:62%;height:180%;background:radial-gradient(circle,rgba(70,216,230,.22),transparent 70%);pointer-events:none;z-index:0}
+  .bonus-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    color:#2A1804;background:linear-gradient(180deg,var(--amber),var(--amber-deep));
+    border-radius:999px;padding:7px 15px;font-weight:800;margin-bottom:18px;
+    box-shadow:0 6px 18px -6px rgba(255,178,62,.6);
+  }
+  .bonus-card h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:14px}
+  .bonus-card .bonus-lead{color:var(--paper-dim);font-size:1.08rem;max-width:54ch}
+  .bonus-list{list-style:none;display:flex;flex-direction:column;gap:13px;margin:22px 0 0}
+  .bonus-list li{display:flex;gap:12px;color:var(--paper);font-size:1rem;line-height:1.45}
+  .bonus-list li::before{content:"✓";color:var(--cyan);font-weight:800;flex-shrink:0}
+  .bonus-foot{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);color:var(--paper-dim);font-size:.97rem;display:flex;gap:10px;align-items:flex-start}
+  .bonus-foot .pin{flex-shrink:0}
+  .bonus-art{
+    position:relative;justify-self:center;width:100%;max-width:280px;
+    background:linear-gradient(165deg,#16314a,#0c1626);
+    border:1px solid var(--line);border-radius:18px;padding:22px 20px;
+    box-shadow:0 24px 48px -24px rgba(0,0,0,.7);
+  }
+  .bonus-art .zoom-bar{display:flex;align-items:center;gap:7px;margin-bottom:16px}
+  .bonus-art .zoom-bar .d{width:10px;height:10px;border-radius:50%;background:var(--line)}
+  .bonus-art .zoom-bar .lbl{margin-left:auto;font-family:ui-monospace,monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+  .bonus-art .tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .bonus-art .tile{aspect-ratio:4/3;border-radius:9px;background:radial-gradient(120% 90% at 50% 35%, #1d3a55, #122538);border:1px solid var(--line);position:relative;overflow:hidden}
+  .bonus-art .tile::after{content:"";position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:linear-gradient(150deg,var(--cyan),var(--cyan-deep));box-shadow:0 0 14px rgba(70,216,230,.5)}
+  .bonus-art .tile.live{border-color:var(--cyan-deep)}
+  .bonus-art .rec{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);border:1px solid var(--line);border-radius:9px;padding:9px;font-size:.78rem;color:var(--paper-dim)}
+  .bonus-art .rec .liveball{width:8px;height:8px;border-radius:50%;background:var(--bad);box-shadow:0 0 10px var(--bad);animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
   .author{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--ink-2),var(--ink-3));border:1px solid var(--line);border-radius:18px;padding:38px 40px}
   .author .quote-mark{position:absolute;top:-18px;right:18px;font-family:Georgia,"Times New Roman",serif;font-size:11rem;line-height:1;color:var(--cyan);opacity:.10;pointer-events:none;user-select:none;font-weight:800;}
   .author .who{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px;}
@@ -356,6 +399,40 @@
         <div class="ch reveal"><div class="num"></div><div><div class="t">A simple landing page (free hosting)</div><div class="d">Yes, the kind of page you're reading right now.</div></div></div>
       </div>
       <p style="text-align:center;margin-top:22px;color:var(--paper-faint)">…plus 5 more chapters; through the legal pages, your visuals, beta testing, submitting to both stores, and <span style="color:var(--paper-dim)">your first-30-days playbook once you're live.</span></p>
+    </div>
+  </section>
+
+  <section class="bonus">
+    <div class="wrap">
+      <div class="bonus-card reveal">
+        <div class="bonus-glow"></div>
+        <div class="bonus-grid">
+          <div>
+            <span class="bonus-badge">★ Included bonus</span>
+            <h2>Free live training on Zoom, included with every copy.</h2>
+            <p class="bonus-lead">Buying the guide also gets you into free live training sessions, where we go deeper into everything inside the guide, walking through it step by step on screen. If you learn best by watching someone actually do it, this is built for you.</p>
+            <ul class="bonus-list">
+              <li>Live walkthroughs that expand on what's in the guide</li>
+              <li>Made for visual learners who'd rather see it done than read it</li>
+              <li>Can't make it live? Every session is recorded and sent your way</li>
+            </ul>
+            <p class="bonus-foot"><span class="pin">📩</span> Keep an eye on your inbox after you buy. That's where the date for the next available live training will land.</p>
+          </div>
+          <div class="bonus-art" aria-hidden="true">
+            <div class="zoom-bar">
+              <span class="d"></span><span class="d"></span><span class="d"></span>
+              <span class="lbl">Live</span>
+            </div>
+            <div class="tiles">
+              <div class="tile live"></div>
+              <div class="tile"></div>
+              <div class="tile"></div>
+              <div class="tile live"></div>
+            </div>
+            <div class="rec"><span class="liveball"></span> Recorded, so you never miss it</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
