@@ -160,5 +160,33 @@
 
     <a class="home" href="https://firstapplaunch.com">Back to firstapplaunch.com</a>
   </main>
+
+  <script>
+    // Send the guide ONLY after payment — this page only loads post-checkout.
+    (function () {
+      var MAKE_WEBHOOK_URL = "https://hook.us2.make.com/urpm4rl6u31v6i35ybp6z1hzf69uehwr";
+
+      var buyer = null;
+      try {
+        buyer = JSON.parse(localStorage.getItem('fial_buyer') || 'null');
+      } catch (e) { buyer = null; }
+
+      // Guard: only fire if we have buyer info AND haven't already sent for this purchase.
+      if (buyer && buyer.email && !localStorage.getItem('fial_sent')) {
+        fetch(MAKE_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: buyer.name || '', email: buyer.email }),
+          keepalive: true
+        }).then(function () {
+          // Mark as sent so a page refresh doesn't fire it again.
+          try {
+            localStorage.setItem('fial_sent', '1');
+            localStorage.removeItem('fial_buyer');
+          } catch (e) {}
+        }).catch(function () { /* silent */ });
+      }
+    })();
+  </script>
 </body>
 </html>
