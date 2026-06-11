@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thank You | First App Launch</title>
 <meta name="robots" content="noindex">
+
+<!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1474192778053980');
+  fbq('track', 'PageView');
+  fbq('track', 'Purchase', {value: 29.00, currency: 'CAD'});
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1474192778053980&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+
 <style>
   :root {
     --navy-900: #0a1628;
@@ -34,8 +53,6 @@
     padding: 48px 24px;
     line-height: 1.6;
   }
-  /* When the viewport is shorter than the card, align to top and let it scroll
-     instead of clipping the top/bottom. */
   @media (max-height: 760px) {
     body { align-items: flex-start; }
   }
@@ -162,7 +179,6 @@
   </main>
 
   <script>
-    // Send the guide ONLY after payment — this page only loads post-checkout.
     (function () {
       var MAKE_WEBHOOK_URL = "https://hook.us2.make.com/urpm4rl6u31v6i35ybp6z1hzf69uehwr";
 
@@ -171,7 +187,6 @@
         buyer = JSON.parse(localStorage.getItem('fial_buyer') || 'null');
       } catch (e) { buyer = null; }
 
-      // Guard: only fire if we have buyer info AND haven't already sent for this purchase.
       if (buyer && buyer.email && !localStorage.getItem('fial_sent')) {
         fetch(MAKE_WEBHOOK_URL, {
           method: 'POST',
@@ -179,7 +194,6 @@
           body: JSON.stringify({ name: buyer.name || '', email: buyer.email }),
           keepalive: true
         }).then(function () {
-          // Mark as sent so a page refresh doesn't fire it again.
           try {
             localStorage.setItem('fial_sent', '1');
             localStorage.removeItem('fial_buyer');
