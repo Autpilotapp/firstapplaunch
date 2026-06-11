@@ -538,19 +538,14 @@
       modalError.style.display = 'block';
       return;
     }
-    modalError.style.display = 'none';
+modalError.style.display = 'none';
     modalBtn.disabled = true;
     modalBtn.textContent = 'One moment...';
 
-    // Fire webhook to Make (don't wait for response — just send and redirect)
+    // Save buyer info in the browser so the thank-you page can send the guide AFTER payment
     try {
-      await fetch(MAKE_WEBHOOK_URL, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ name, email }),
-        keepalive: true
-      });
-    } catch(e){ /* silent fail — don't block the buyer */ }
+      localStorage.setItem('fial_buyer', JSON.stringify({ name, email }));
+    } catch(e){ /* ignore */ }
 
     if(window.fbq){ fbq('track','InitiateCheckout',{value:29.00,currency:'CAD'}); }
 
